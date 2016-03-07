@@ -1,0 +1,34 @@
+﻿<Window x:Class="BleSensorDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BLE Sensor Demo" Height="621.058" Width="1101.602">
+    <Grid Margin="10,0,2,9">
+        <GroupBox Header="WASP" HorizontalAlignment="Left" Margin="10,18,0,0" VerticalAlignment="Top" Height="512" Width="243">
+            <Grid Margin="0,16,0,14">
+                <Button Name="BtnConnect" Content="Connect" HorizontalAlignment="Left" Margin="10,405,0,0" VerticalAlignment="Top" Width="94" Height="38" Click="Button_Click" RenderTransformOrigin="0.557,1.786"/>
+                <CheckBox Name="UsbOnly" Content="USB connection" HorizontalAlignment="Left" Margin="120,417,0,0" VerticalAlignment="Top" IsChecked="false"/>
+                <ListView Name="WaspList" HorizontalAlignment="Left" Height="358" Margin="10,10,0,0" VerticalAlignment="Top" Width="202">
+                    <ListView.View>
+                        <GridView >
+                            <GridViewColumn Width="300" Header="WASPs"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </GroupBox>
+        <ListView Name="Unknown" FontWeight="Bold" HorizontalAlignment="Left" Height="227" Margin="271,303,0,0" VerticalAlignment="Top" Width="777">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Unknown BLE devices" Width="700"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Name="BleDevices" FontWeight="Bold" HorizontalAlignment="Left" Height="237" Margin="271,32,0,0" VerticalAlignment="Top" Width="777" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="BLE devices" Width="700"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

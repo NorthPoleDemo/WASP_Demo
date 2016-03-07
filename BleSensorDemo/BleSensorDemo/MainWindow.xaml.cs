@@ -97,7 +97,7 @@ namespace BleSensorDemo
         private void SuuntoHrm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             SuuntoHRM hrm = sender as SuuntoHRM;
-            string line = string.Format("Type: Polar H7 {0} ID:{1} Rate:{2}", hrm.Service.ToString(), hrm.DeviceId, hrm.FilteredHeartRate);
+            string line = string.Format("Type: Suunto HRM {0} ID:{1} Rate:{2}", hrm.Service.ToString(), hrm.DeviceId, hrm.FilteredHeartRate);
 
             int i = 0;
             foreach (string s in BleDevices.Items)

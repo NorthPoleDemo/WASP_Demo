@@ -8,7 +8,9 @@
         Title="Firmware Updater Example" Height="350" Width="525">
     <Grid>
         <Button x:Name="buttonPoE" Content="Update WASP-PoE" HorizontalAlignment="Left" Margin="24,66,0,0" VerticalAlignment="Top" Width="141" Height="60" Click="buttonPoE_Click"/>
-        <ProgressBar x:Name="Progress" Height="25" Margin="24,190,23,0" VerticalAlignment="Top"/>
+        <ProgressBar x:Name="Progress" Height="46" Margin="24,181,23.4,0" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="Label" HorizontalAlignment="Center" Margin="118,190,115.4,103.8" VerticalAlignment="Center" Height="27"  Width="285"/>
+        <Button x:Name="buttonOta" Content="OTA Update WASP-N" HorizontalAlignment="Left" Margin="285,66,0,0" VerticalAlignment="Top" Width="141" Height="60" Click="buttonOta_Click"/>
 
     </Grid>
 </Window>

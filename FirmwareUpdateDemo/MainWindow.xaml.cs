@@ -24,7 +24,7 @@ namespace FirmwareUpdateDemo
     /// The devices used in this example are given names of WASP-PoE_Test221 and WASP-N_Test221. You may substitute the
     /// names of your own devices in the  _deviceNames array below.
     /// 
-    /// The firmware versions included are PoE 2.2.37 and N 5.4.17. 
+    /// The firmware versions included are PoE 2.4.10 and N 5.4.17. 
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -35,7 +35,7 @@ namespace FirmwareUpdateDemo
         /// <summary>
         /// Name of the WASP to be used for this test
         /// </summary>
-        string[] _deviceNames = { "WASP-PoE_Test221", "WASP-N_Test221" };
+        string[] _deviceNames = { "PoE-Test", "WASP-N_Test221" };
 
         public MainWindow()
         {
@@ -60,7 +60,15 @@ namespace FirmwareUpdateDemo
             Progress.Value = 0;
             var progress = new Progress<ProgrammingProgress>(TesterProgrammingProgress);
             label.Content = "Programming...";
-            _waspUT.UpdateFirmware(Bundle.GetBundle("WASP-PoE 2.2.37-Firmware-R1.zip"), progress, new CompletionCallback(ProgrammingComplete), AccessMethod.Ethernet);
+            _waspUT.UpdateFirmware(Bundle.GetBundle("WASP-PoE 2.4.10-Firmware-R2.zip"), progress, new CompletionCallback(ProgrammingComplete), AccessMethod.Ethernet);
+        }
+
+        private void Wasp_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "RadioVersion")
+            {
+                Progress.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => { label1.Content = string.Format("Radio 3 firmware: {0}",_waspUT.RadioVersion[3]); }));                
+            }
         }
 
         /// <summary>
@@ -78,8 +86,11 @@ namespace FirmwareUpdateDemo
                     if (((Wasp)e.NewItems[i]).Name == _deviceNames[0] )
                     {
                         _waspUT = (Wasp)e.NewItems[i];
+                        _waspUT.PropertyChanged += Wasp_PropertyChanged;
+                        WaspCollection.SendExtendedWaspQuery(_waspUT.WaspIPAddress);
                         _waspReady.Set();
                         buttonPoE.IsEnabled = true;
+                        buttonRadio.IsEnabled = true;
                         break;
                     }
                     else if (((Wasp)e.NewItems[i]).Name == _deviceNames[1])
@@ -112,6 +123,7 @@ namespace FirmwareUpdateDemo
         {
             if (status == ProgrammingStatusCode.SUCCESS)
             {
+                WaspCollection.SendExtendedWaspQuery(_waspUT.WaspIPAddress);
                 Progress.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => { Progress.Background = Brushes.Green; label.Content = "Programming Complete"; }));
             }
             else
@@ -133,6 +145,51 @@ namespace FirmwareUpdateDemo
             var progress = new Progress<ProgrammingProgress>(TesterProgrammingProgress);
             label.Content = "Programming...";
             _waspUT.UpdateFirmwareWithBundle(ManufacturingPackage.GetPackage("WASP-N 5.4.17-Firmware-R1.zip"), progress, new CompletionCallback(ProgrammingComplete), false, AccessMethod.WiFi);
+        }
+
+        /// <summary>
+        /// Updates radio 4 to the selected type
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonRadio_Click(object sender, RoutedEventArgs e)
+        {
+            //Make sure the radio exists
+            if (_waspUT.Radio4Type == RadioTypes.NotPopulated)
+            {
+                return;
+            }
+            Progress.Background = Brushes.Yellow;
+            Progress.Value = 0;
+            var progress = new Progress<ProgrammingProgress>(TesterProgrammingProgress);
+
+            RadioFirmwareLoader rfl = new RadioFirmwareLoader(_waspUT);
+
+            Bundle bundle = Bundle.GetBundle("WASP-PoE 2.4.10-Firmware-R2.zip");
+            RadioFirmware bleFirmware = bundle.RadioFirmwares.FirstOrDefault(x => x.FirmwareType == FirmwareTypes.BLE_ACTIVE_SCAN);
+            RadioFirmware antFirmware = bundle.RadioFirmwares.FirstOrDefault(x => x.FirmwareType == FirmwareTypes.ANT);
+            RadioFirmware bcnFirmware = bundle.RadioFirmwares.FirstOrDefault(x => x.FirmwareType == FirmwareTypes.BEACON);
+            RadioFirmware programmingFirmware = null;
+
+            if (radioButtonAnt.IsChecked == true)
+            {
+                programmingFirmware = antFirmware;
+            }
+            else if (radioButtonBle.IsChecked == true)
+            {
+                programmingFirmware = bleFirmware;
+            }
+            else
+            {
+                programmingFirmware = bcnFirmware;
+            }
+
+            if (programmingFirmware == null)
+            {
+                MessageBox.Show("No firmware of that type in Bundle");
+                return;
+            }
+            rfl.Program(3, programmingFirmware, progress, new CompletionCallback(ProgrammingComplete));
         }
     }
 }

@@ -7,10 +7,15 @@
         mc:Ignorable="d"
         Title="Firmware Updater Example" Height="350" Width="525">
     <Grid>
-        <Button x:Name="buttonPoE" Content="Update WASP-PoE" HorizontalAlignment="Left" Margin="24,66,0,0" VerticalAlignment="Top" Width="141" Height="60" Click="buttonPoE_Click"/>
-        <ProgressBar x:Name="Progress" Height="46" Margin="24,181,23.4,0" VerticalAlignment="Top"/>
-        <Label x:Name="label" Content="Label" HorizontalAlignment="Center" Margin="118,190,115.4,103.8" VerticalAlignment="Center" Height="27"  Width="285"/>
+        <Button x:Name="buttonPoE" Content="Update WASP-PoE Firmware" HorizontalAlignment="Left" Margin="24,66,0,0" VerticalAlignment="Top" Width="165" Height="60" Click="buttonPoE_Click" IsEnabled="False"/>
+        <ProgressBar x:Name="Progress" Height="46" Margin="24,255,23,0" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="Label" HorizontalAlignment="Center" Margin="117,265,115,27" VerticalAlignment="Center" Height="27"  Width="285"/>
         <Button x:Name="buttonOta" Content="OTA Update WASP-N" HorizontalAlignment="Left" Margin="285,66,0,0" VerticalAlignment="Top" Width="141" Height="60" Click="buttonOta_Click"/>
+        <Button x:Name="buttonRadio" Content="Update WASP-PoE Radio" HorizontalAlignment="Left" Margin="24,155,0,0" VerticalAlignment="Top" Width="165" Height="58" Click="buttonRadio_Click" IsEnabled="False"/>
+        <RadioButton x:Name="radioButtonAnt" GroupName="RadioGroup" Content="ANT" HorizontalAlignment="Left" Margin="225,155,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="radioButtonBle" GroupName="RadioGroup" Content="BLE" HorizontalAlignment="Left" Margin="225,177,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="radioButtonBeacon" GroupName="RadioGroup" Content="RadioButton" HorizontalAlignment="Left" Margin="225,197,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="" HorizontalAlignment="Left" Margin="24,218,0,0" VerticalAlignment="Top" Width="286"/>
 
     </Grid>
 </Window>

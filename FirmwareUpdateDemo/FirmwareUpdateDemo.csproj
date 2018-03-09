@@ -113,10 +113,13 @@
     <None Include="Wasp-N 5.4.17-Firmware-R1.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="WASP-PoE 2.2.37-Firmware-R1.zip">
+    <None Include="Wasp-N 5.4.22-Firmware-R1.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="WASP-PoE 2.4.10-Firmware-R2.zip">
+    <None Include="WASP-PoE 2.3.5-Firmware-R1.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="WASP-PoE 2.4.11_1.6-1.11_Bootloader-Update-R1.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -124,6 +127,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\North Pole Engineering\NorthPoleEngineering\NorthPoleEngineering.csproj">
+      <Project>{849a1f80-91aa-48b2-81cc-069ecc7d15b1}</Project>
+      <Name>NorthPoleEngineering</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\WaspClassLibrary\WaspClassLibrary.csproj">
       <Project>{3ca83b8b-a42f-4de4-9067-35c1d7fa03d7}</Project>
       <Name>WaspClassLibrary</Name>

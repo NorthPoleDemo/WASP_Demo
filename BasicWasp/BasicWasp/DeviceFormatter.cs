@@ -184,17 +184,31 @@ namespace BasicWasp
         {
             FitnessEquipment fe = h as FitnessEquipment;
             List<string> data = new List<string>();
-            data.Add("ID: " + fe.ExtendedDeviceNumber.ToString());
-            data.Add("Type: " + fe.DeviceType.ToString());
+            string name = "Unknown";
+            ushort number = 0;
             if (fe.Manufacturer != null)
             {
-                data.Add(string.Format("Mfr: {0}", fe.Manufacturer.ManufacturerName));
-                data.Add(string.Format("Model: {0}", fe.Manufacturer.ModelNumber));
+                number = fe.Manufacturer.ModelNumber;
+                name = fe.Manufacturer.ManufacturerName;
+            }
+
+            AntPlusDeviceEventArgs ap = a as AntPlusDeviceEventArgs;
+            {
+                if (ap != null)
+                {
+                    data.Add("ID: " + fe.ExtendedDeviceNumber.ToString());
+                    data.Add("Type: " + fe.DeviceType.ToString());
+                    return data;
+                }
             }
 
             TrainerMessageEventArgs tr = a as TrainerMessageEventArgs;
             if (tr != null)
             {
+                data.Add("ID: " + fe.ExtendedDeviceNumber.ToString());
+                data.Add("Type: " + fe.DeviceType.ToString());
+                data.Add(string.Format("Mfr: {0}", name));
+                data.Add(string.Format("Model: {0}", number));
                 data.Add(string.Format("Cadence: {0}", tr.InstantaneousCadence));
                 data.Add(string.Format("Power: {0}", tr.AccumulatedPower));
             }
@@ -203,6 +217,10 @@ namespace BasicWasp
                 RowerMessageEventArgs r = a as RowerMessageEventArgs;
                 if (r != null)
                 {
+                    data.Add("ID: " + fe.ExtendedDeviceNumber.ToString());
+                    data.Add("Type: " + fe.DeviceType.ToString());
+                    data.Add(string.Format("Mfr: {0}", name));
+                    data.Add(string.Format("Model: {0}", number));
                     data.Add(string.Format("Cadence: {0}", r.InstantaneousCadence));
                     data.Add(string.Format("Strokes: {0}", r.AccumulatedStrokeCount));
                 }
@@ -218,7 +236,7 @@ namespace BasicWasp
         /// <returns></returns>
         public static List<string> FormatUnknownSensor(object j, object a)
         {
-            return new List<string> { "Unknown device", "Type: Unknown"};
+            return new List<string> { "ANT Device", "Type: Unknown"};
         }
 
     }

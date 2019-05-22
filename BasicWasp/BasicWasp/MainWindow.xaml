@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BasicWasp"
         mc:Ignorable="d"
-        Title="Device dialog" Height="780" Width="932.463">
+        Title="Device dialog" Height="780" Width="1088.054">
     <Grid VerticalAlignment="Bottom">
         <StackPanel Margin="10,38,10,10" VerticalAlignment="Stretch" >
             <WrapPanel Name="MainPanel" HorizontalAlignment="Left" MinHeight="400" Margin="10,32,0,0" Width="904"/>

@@ -94,12 +94,12 @@ namespace BasicWasp
                     WaspData wd = new WaspData
                     {
                         ChargingState = w.IsCharging.ToString(),
-                        FW = string.Format("{0}.{1}", w.VersionMajor, w.VersionMinor),
+                        FW = string.Format("{0}",w.FirmwareVersion),
                         MAC = BitConverter.ToString(w.MAC),
                         Name = w.Name,
                         Type = TypeDescriptor.GetConverter(w.ProductType).ConvertToString(w.ProductType),
                         Voltage = string.Format("{0:0.00}", w.BatteryLevel),
-                        FuelGauge = string.Format("{0:0.00}", w.FuelGauge)
+                        FuelGauge = string.Format("{0:0.0}%", w.FuelGauge*100)
                     };
                     _waspData.Add(wd);
                 }
@@ -176,9 +176,12 @@ namespace BasicWasp
                 ListView lv = gb.Content as ListView;
 
                 List<string> newData = DeviceFormatter.FormatDevice((AntDevice)sender, e);
-                lv.ItemsSource = null;
-                lv.ItemsSource = newData;
-                lv.Items.Refresh();
+                //lv.ItemsSource = null;
+                if (newData?.Count > 0)
+                {
+                    lv.ItemsSource = newData;
+                    lv.Items.Refresh();
+                }
             }
             catch (Exception)
             {
@@ -196,14 +199,20 @@ namespace BasicWasp
         {
             GroupBox gb = null;
             List<string> d = DeviceFormatter.FormatDevice(dev, args);
-            gb = new GroupBox();
-            // First item in the list is the ID
-            gb.Header = d[0];
-            ListView lv = new ListView();
-            lv.ItemsSource = d;
-            lv.Margin = new Thickness(5);
-            lv.Padding = new Thickness(5);
-            gb.Content = lv;
+            if (d.Count > 0)
+            {
+                ListView lv = new ListView();
+                lv.ItemsSource = d;
+                lv.Margin = new Thickness(5);
+                lv.Padding = new Thickness(5);
+                gb = new GroupBox()
+                {
+                    Width = 200,
+                    // First item in the list is the ID
+                    Header = d[0],
+                    Content = lv
+                };
+            }
             return gb;
         }
     }

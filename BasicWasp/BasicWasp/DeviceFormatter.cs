@@ -68,7 +68,8 @@ namespace BasicWasp
         {
             HeartRateMonitor hrm = h as HeartRateMonitor;
             List<string> data = new List<string>();
-            data.Add("ID: " + hrm.ExtendedDeviceNumber.ToString());
+            string targetName = string.Format("{0} ID: {1}", hrm.DeviceType, hrm.ExtendedDeviceNumber);
+            data.Add(targetName);
             data.Add("Type: " + hrm.DeviceType.ToString());
             if (hrm.Manufacturer != null)
             {
@@ -95,7 +96,8 @@ namespace BasicWasp
         {
             BikeSpeedSensor hrm = h as BikeSpeedSensor;
             List<string> data = new List<string>();
-            data.Add("ID: " + hrm.ExtendedDeviceNumber.ToString());
+            string targetName = string.Format("{0} ID: {1}", hrm.DeviceType, hrm.ExtendedDeviceNumber);
+            data.Add(targetName);
             data.Add("Type: " + hrm.DeviceType.ToString());
             if (hrm.Manufacturer != null)
             {
@@ -123,7 +125,8 @@ namespace BasicWasp
         {
             BikePowerSensor bp = h as BikePowerSensor;
             List<string> data = new List<string>();
-            data.Add("ID: " + bp.ExtendedDeviceNumber.ToString());
+            string targetName = string.Format("{0} ID: {1}", bp.DeviceType, bp.ExtendedDeviceNumber);
+            data.Add(targetName);
             data.Add("Type: " + bp.DeviceType.ToString());
             if (bp.Manufacturer != null)
             {
@@ -153,7 +156,8 @@ namespace BasicWasp
         {
             MuscleOxygenMonitor moxy = h as MuscleOxygenMonitor;
             List<string> data = new List<string>();
-            data.Add("ID: " + moxy.ExtendedDeviceNumber.ToString());
+            string targetName = string.Format("{0} ID: {1}", moxy.DeviceType, moxy.ExtendedDeviceNumber);
+            data.Add(targetName);
             data.Add("Type: " + moxy.DeviceType.ToString());
             if (moxy.Manufacturer != null)
             {
@@ -196,16 +200,31 @@ namespace BasicWasp
             {
                 if (ap != null)
                 {
-                    data.Add("ID: " + fe.ExtendedDeviceNumber.ToString());
+                    string targetName = string.Format("{0} ID: {1}", ap.DeviceType, ap.ExtendedDeviceNumber);
+                    data.Add(targetName);
+//                    data.Add("ID: " + fe.ExtendedDeviceNumber.ToString());
                     data.Add("Type: " + fe.DeviceType.ToString());
                     return data;
                 }
             }
 
+            BikeMessageEventArgs bike = a as BikeMessageEventArgs;
+            if (bike != null)
+            {
+                string targetName = string.Format("{0} ID: {1}", ap.DeviceType, ap.ExtendedDeviceNumber);
+                data.Add(targetName);
+                data.Add("Type: " + fe.DeviceType.ToString());
+                data.Add(string.Format("Mfr: {0}", name));
+                data.Add(string.Format("Model: {0}", number));
+                data.Add(string.Format("Cadence: {0}", bike.InstantaneousCadence));
+                data.Add(string.Format("Power: {0}", bike.InstantaneousPower));
+            }
+
             TrainerMessageEventArgs tr = a as TrainerMessageEventArgs;
             if (tr != null)
             {
-                data.Add("ID: " + fe.ExtendedDeviceNumber.ToString());
+                string targetName = string.Format("{0} ID: {1}", ap.DeviceType, ap.ExtendedDeviceNumber);
+                data.Add(targetName);
                 data.Add("Type: " + fe.DeviceType.ToString());
                 data.Add(string.Format("Mfr: {0}", name));
                 data.Add(string.Format("Model: {0}", number));
@@ -217,7 +236,8 @@ namespace BasicWasp
                 RowerMessageEventArgs r = a as RowerMessageEventArgs;
                 if (r != null)
                 {
-                    data.Add("ID: " + fe.ExtendedDeviceNumber.ToString());
+                    string targetName = string.Format("{0} ID: {1}", ap.DeviceType, ap.ExtendedDeviceNumber);
+                    data.Add(targetName);
                     data.Add("Type: " + fe.DeviceType.ToString());
                     data.Add(string.Format("Mfr: {0}", name));
                     data.Add(string.Format("Model: {0}", number));

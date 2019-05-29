@@ -168,8 +168,9 @@ namespace BasicWasp
         /// <param name="e"></param>
         private void MainWindow_AntMessageEvent(object sender, EventArgs e)
         {
-            // Find the listview it corresponds to and refresh            
-            string targetName = "ID: " + ((AntDevice)sender).ExtendedDeviceNumber.ToString();
+            // Find the listview it corresponds to and refresh    
+            AntDevice dev = sender as AntDevice;
+            string targetName = string.Format("{0} ID: {1}", dev.DeviceType, dev.ExtendedDeviceNumber);
             try
             {
                 GroupBox gb = MainPanel.Children.OfType<GroupBox>().First<GroupBox>(x => x.Header.ToString() == targetName);
